@@ -1,13 +1,13 @@
 version: "3.9"
 services:
   app:
-    container_name: powertofly
-    image: powertofly
+    container_name: users_app_be
+    image: users_app_be
     build: .
     ports:
       - "80:80"
     environment:
-      - DATABASE_URL=postgresql+psycopg2://root:postgres@database:5432/power_to_fly
+      - DATABASE_URL=postgresql+psycopg2://root:postgres@database:5432/users_app_db
     depends_on:
       - db
 
@@ -19,7 +19,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=root
-      - POSTGRES_DB=power_to_fly
+      - POSTGRES_DB=users_app_db
     volumes:
       - db_volume:/var/lib/postgresql
 
