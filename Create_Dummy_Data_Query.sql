@@ -4,5 +4,5 @@ insert into users (
 select
 	left(md5(i::text), 10),
 	(floor(random() * 100 + 1)::int),
-	left(md5(random()::text), 4)
+	left(md5(random()::text), 10)
 from generate_series(1,1000000) s(i);
