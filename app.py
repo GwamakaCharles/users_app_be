@@ -66,9 +66,7 @@ def home():
 @app.route('/users', methods=['GET'], defaults={"page": 1})
 @app.route('/<int:page>', methods=['GET'])
 @cache.cached(timeout=30, query_string=True)
-def get_users(page):
-    # ROWS_PER_PAGE = 100
-    # page = page
+def get_users():
     users = UserModel.query.paginate()
     paginated_users = users.items
 
