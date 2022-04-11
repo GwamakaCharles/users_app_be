@@ -14,7 +14,6 @@ class Country(Generator):
             self._lines = open('seeds/countries.txt', 'r').readlines()
 
         country = self.rnd.choice(self._lines).strip()
-
         return country
 
 
@@ -24,7 +23,6 @@ class UserSeeder(Seeder):
         self.priority = 10
 
     def run(self):
-
         faker = Faker(
             cls=Users,
             init={
@@ -35,6 +33,7 @@ class UserSeeder(Seeder):
             }
         )
 
+# Create 1000000 users
         for user in faker.create(1000000):
             print("Adding user: %s" % user)
             self.db.session.add(user)
