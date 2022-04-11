@@ -1,0 +1,123 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Mocking
+    url: http://localhost:5000/
+info:
+  description: This is a simple API for testing Users application
+  version: "1.0.0"
+  title: Simple Users BE API
+  contact:
+    email: gwamaka.mwamwaja@outlook.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+paths:
+  /:
+    get:
+      tags:
+        - homepage
+      summary: returns a homepage
+      description: |
+        Hello! Welcome to my power to fly code challenge. The endpoints available are /users and /user/<string:name>
+      responses:
+        "200":
+          description: results matching criteria
+          content:
+            application/json:
+              schema:
+                type: string
+        "404":
+          description: |
+            The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+  /users:
+    get:
+      tags:
+        - users
+      summary: returns a list of users
+      description: |
+        By passing in the appropriate options, you can retrieve a list of users available in the database
+      parameters:
+        - in: query
+          name: page
+          description: pass an optional page integer for looking up a particular page of results
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+        - in: query
+          name: per_page
+          description: number of records per page for pagination
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 20
+      responses:
+        "200":
+          description: results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "404":
+          description: |
+            The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+  /user/<string:name>:
+    get:
+      tags:
+        - user
+      summary: returns a user
+      description: |
+        By passing in the appropriate options, you can retrieve a user available in the database
+      parameters:
+        - in: query
+          name: page
+          description: pass an optional page integer for looking up a particular page of results
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+        - in: query
+          name: per_page
+          description: number of records per page for pagination
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 20
+      responses:
+        "200":
+          description: results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "404":
+          description: |
+            The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - name
+        - age
+        - country
+      properties:
+        name:
+          type: string
+          example: "c4ca4238a0"
+        age:
+          type: integer
+          example: 89
+        country:
+          type: string
+          example: d79c

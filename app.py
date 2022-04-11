@@ -65,7 +65,7 @@ def create_tables():
 
 @app.route('/', methods=['GET'])
 def home():
-    return f'Hello! Welcome to my power to fly code challenge. The endpoints available are /users and /user/<string:name>'
+    return f"The endpoints available are /users and /user/<name>. For example, /users will return all the users and /user/<name> will return the user with the given name."
 
 # endpoint to retrieve all users
 api.add_resource(Users, '/users')
