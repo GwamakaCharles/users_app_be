@@ -62,9 +62,11 @@ def create_tables():
 def home():
     return f'Hello! Welcome to my power to fly code challenge. The endpoints available are /users and /users/filter'
 
+api.add_resource(Users, '/users')
+api.add_resource(User, '/user/<string:name>')
 
-@app.route('/users', methods=['GET'], defaults={"page": 1})
-@app.route('/<int:page>', methods=['GET'])
+# @app.route('/users', methods=['GET'], defaults={"page": 1})
+# @app.route('/<int:page>', methods=['GET'])
 @cache.cached(timeout=30, query_string=True)
 def get_users():
     users = UserModel.query.paginate()
@@ -130,8 +132,6 @@ def get_users_filtered():
         'count': len(paginated_users)
     })
 
-api.add_resource(Users, '/users')
-api.add_resource(User, '/user/<string:name>')
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
