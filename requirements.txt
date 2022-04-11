@@ -1,9 +1,9 @@
-Flask==1.0.2
+Flask
 redis
 psycopg2-binary
 sqlalchemy-seeder
-Flask-SQLAlchemy==2.3.0
+Flask-SQLAlchemy
 Flask-Seeder
-gunicorn==19.9.0
+gunicorn
 sqlalchemy
-flask_caching==1.10.1
+flask_caching

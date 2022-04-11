@@ -6,7 +6,7 @@ from flask_caching import Cache
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://root:postgres@database:5432/power_to_fly'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://root:postgres@database:5432/users_app_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = flask_sqlalchemy.SQLAlchemy(app)

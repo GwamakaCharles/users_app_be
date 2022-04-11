@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(
-    name='power_to_fly',
+    name='users_app_be',
     packages=['app'],
     include_package_data=True
 )
