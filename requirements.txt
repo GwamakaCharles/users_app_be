@@ -5,5 +5,4 @@ sqlalchemy-seeder
 Flask-SQLAlchemy
 Flask-Seeder
 gunicorn
-sqlalchemy
 flask_caching

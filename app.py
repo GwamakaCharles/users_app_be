@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import flask_sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 from flask_seeder import FlaskSeeder
 import redis
 from flask_caching import Cache
@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://root:postgres@database:5432/users_app_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = flask_sqlalchemy.SQLAlchemy(app)
+db = SQLAlchemy(app)
 
 r = redis.Redis(host='cache', port=6379, db=0)
 cache = Cache(app)
@@ -28,15 +28,8 @@ class Users(db.Model):
         self.age = age
         self.country = country
 
-    def __str__(self):
-        return f"ID={self.id}, Name={self.name}, Age={self.age}, Country={self.country}"
-
-    def format(self):
-        return {
-            'name': self.name,
-            'age': self.age,
-            'country': self.country
-        }
+    def json(self):
+        return {'name': self.name, 'age':self.age, 'country':self.country}
 
 
 seeder = FlaskSeeder()
@@ -54,7 +47,7 @@ def home():
 @app.route('/<int:page>', methods=['GET'])
 @cache.cached(timeout=30, query_string=True)
 def get_users(page):
-    ROWS_PER_PAGE = 100
+    ROWS_PER_PAGE = 100 #Show 100 users per page
 
     page = page
 
