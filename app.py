@@ -34,8 +34,12 @@ class Users(db.Model):
 
 seeder = FlaskSeeder()
 seeder.init_app(app, db)
-db.create_all()
-db.session.commit()
+# db.create_all()
+# db.session.commit()
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 
 @app.route('/', methods=['GET'])
