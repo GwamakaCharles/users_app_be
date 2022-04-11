@@ -92,7 +92,7 @@ def get_users():
 #         'user': user.json()
 #     })
 
-@app.route('/users/filter', methods=['POST'])
+# @app.route('/users/filter', methods=['POST'])
 @cache.cached(timeout=30, query_string=True)
 def get_users_filtered():
     # page = request.args.get('page', 1, type=int)
