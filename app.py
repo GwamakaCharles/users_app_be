@@ -27,12 +27,12 @@ app.config.from_mapping(config)
 cache = Cache(app)
 
 class Users(Resource):
-    @cache.cached(timeout=50)
+    @cache.cached(timeout=30)
     def get(self):
         return {'users' : [user.json() for user in UserModel.query.paginate().items]}
 
 class User(Resource):
-    @cache.cached(timeout=50)
+    @cache.cached(timeout=30)
     def get(self,name):
         user = UserModel.find_user_by_name(name)
         return user.json()
@@ -52,7 +52,7 @@ class UserModel(db.Model):
         return {'name': self.name, 'age':self.age, 'country':self.country}
     
     @classmethod
-    @cache.cached(timeout=50)
+    @cache.cached(timeout=30)
     def find_user_by_name(cls,name): 
        return cls.query.filter_by(name=name).first_or_404()
 
