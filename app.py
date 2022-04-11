@@ -22,12 +22,6 @@ class Users(db.Model):
     age = db.Column(db.Integer)
     country = db.Column(db.String(50))
 
-    def __init__(self, id, name, age, country):
-        self.id = id
-        self.name = name
-        self.age = age
-        self.country = country
-
     def json(self):
         return {'name': self.name, 'age':self.age, 'country':self.country}
 
