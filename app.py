@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_seeder import FlaskSeeder
+from flask_restful import Resource, Api
 import redis
 from flask_caching import Cache
 
@@ -9,13 +10,23 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://root:postgres@database:5432/users_app_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+api = Api(app)
 db = SQLAlchemy(app)
 
 r = redis.Redis(host='cache', port=6379, db=0)
 cache = Cache(app)
 
+class Users(Resource):
+    def get(self):
+        return {'users' : [user.json() for user in UserModel.query.paginate().items]}
 
-class Users(db.Model):
+class User(Resource):
+    def get(self,name):
+        user = UserModel.find_user_by_name(name)
+        return user.json()
+
+
+class UserModel(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -30,10 +41,15 @@ class Users(db.Model):
 
     def json(self):
         return {'name': self.name, 'age':self.age, 'country':self.country}
+    
+    @classmethod
+    def find_user_by_name(cls,name): 
+       return cls.query.filter_by(name=name).first_or_404()
 
 
-seeder = FlaskSeeder()
-seeder.init_app(app, db)
+
+# seeder = FlaskSeeder()
+# seeder.init_app(app, db)
 # db.create_all()
 # db.session.commit()
 
