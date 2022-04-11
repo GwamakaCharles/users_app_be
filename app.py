@@ -82,13 +82,18 @@ def get_users():
         'count': len(paginated_users)
     })
 
+# @app.route('/users/<>', methods=['GET'])
+# def get_user_by_name(name):
+#     user = UserModel.find_user_by_name(name)
+#     return jsonify({
+#         'success': True,
+#         'user': user.json()
+#     })
 
 @app.route('/users/filter', methods=['POST'])
 @cache.cached(timeout=30, query_string=True)
 def get_users_filtered():
-    ROWS_PER_PAGE = 100
-
-    page = request.args.get('page', 1, type=int)
+    # page = request.args.get('page', 1, type=int)
     filters = request.get_json()
 
     name = None
@@ -109,7 +114,7 @@ def get_users_filtered():
         UserModel.name.ilike(name),
         UserModel.country.ilike(country),
         UserModel.age == age
-    ).paginate(page=page, per_page=ROWS_PER_PAGE)
+    ).paginate()
 
     paginated_users = users.items
 
@@ -125,6 +130,8 @@ def get_users_filtered():
         'count': len(paginated_users)
     })
 
+api.add_resource(Users, '/users')
+api.add_resource(User, '/user/<string:name>')
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
