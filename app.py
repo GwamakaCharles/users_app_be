@@ -68,10 +68,8 @@ def home():
 @cache.cached(timeout=30, query_string=True)
 def get_users(page):
     ROWS_PER_PAGE = 100 #Show 100 users per page
-
     page = page
-
-    users = Users.query.paginate(page=page, per_page=ROWS_PER_PAGE)
+    users = UserModel.query.paginate(page=page, per_page=ROWS_PER_PAGE)
     paginated_users = users.items
 
     all_users = [{
@@ -109,10 +107,10 @@ def get_users_filtered():
         if 'country' in filters:
             country = filters['country']
 
-    users = Users.query.filter(
-        Users.name.ilike(name),
-        Users.country.ilike(country),
-        Users.age == age
+    users = UserModel.query.filter(
+        UserModel.name.ilike(name),
+        UserModel.country.ilike(country),
+        UserModel.age == age
     ).paginate(page=page, per_page=ROWS_PER_PAGE)
 
     paginated_users = users.items
