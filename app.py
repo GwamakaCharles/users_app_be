@@ -13,21 +13,36 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api = Api(app)
 db = SQLAlchemy(app)
 
+# Configure Redis cache
 r = redis.Redis(host='cache', port=6379, db=0)
+config = {
+    "CACHE_TYPE": "RedisCache",  # Flask-Caching related configs
+    "CACHE_REDIS_HOST": "cache",
+    "CACHE_REDIS_PORT": 6379,
+    "CACHE_REDIS_DB": 0,
+    "CACHE_DEFAULT_TIMEOUT": 300
+}
+# tell Flask to use the above defined config
+app.config.from_mapping(config)
 cache = Cache(app)
 
 class Users(Resource):
+    @cache.cached(timeout=50)
     def get(self):
         return {'users' : [user.json() for user in UserModel.query.paginate().items]}
 
 class User(Resource):
+    @cache.cached(timeout=50)
     def get(self,name):
         user = UserModel.find_user_by_name(name)
         return user.json()
 
 
 class UserModel(db.Model):
-    __tablename__ = 'users'
+    """
+    Create a new user model with the given name, age and country
+    """
+    __tablename__ = 'users' # table name
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     age = db.Column(db.Integer)
@@ -37,6 +52,7 @@ class UserModel(db.Model):
         return {'name': self.name, 'age':self.age, 'country':self.country}
     
     @classmethod
+    @cache.cached(timeout=50)
     def find_user_by_name(cls,name): 
        return cls.query.filter_by(name=name).first_or_404()
 
@@ -50,7 +66,10 @@ def create_tables():
 def home():
     return f'Hello! Welcome to my power to fly code challenge. The endpoints available are /users and /user/<string:name>'
 
+# endpoint to retrieve all users
 api.add_resource(Users, '/users')
+
+# endpoint to retrieve a user by name
 api.add_resource(User, '/user/<string:name>')
 
 if __name__ == "__main__":
