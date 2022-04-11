@@ -9,7 +9,7 @@ PowerToFly code challenge
 - Gunicorn
 - Docker
 
-**Endpoints**
+**API Endpoints**
 
 There are two available endpoints:
 
