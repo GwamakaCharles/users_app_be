@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_seeder import FlaskSeeder
 from flask_restful import Resource, Api
 from flask_wtf.csrf import CSRFProtect
+from resources import Users, User
 import redis
 import os
 from flask_caching import Cache
@@ -32,49 +33,9 @@ api = Api(app)
 # Initialize the database connection
 db = SQLAlchemy(app)
 
-# Configure Redis cache to store the cache data
-# config = {
-#     "CACHE_TYPE": "RedisCache",  # Set up Redis as the cache
-#     "CACHE_REDIS_HOST": "redis",  # Set the Redis host
-#     "CACHE_REDIS_PORT": 6379, # Set the Redis port
-#     "CACHE_REDIS_DB": 0, # Set the Redis DB
-#     "CACHE_REDIS_URL": "redis://redis:6379/0", # Set the Redis URL
-#     "CACHE_DEFAULT_TIMEOUT": 300 # Set the default cache timeout
-# }
 # tell Flask to use the above defined config
 app.config.from_object('env_variables.development')
 cache = Cache(app)
-
-class Users(Resource):
-    @cache.cached(timeout=30)
-    def get(self):
-        return {'users' : [user.json() for user in UserModel.query.paginate().items]}
-
-class User(Resource):
-    @cache.cached(timeout=30)
-    def get(self,name):
-        user = UserModel.find_user_by_name(name)
-        return user.json()
-
-
-class UserModel(db.Model):
-    """
-    Create a new user model with the given name, age and country
-    """
-    __tablename__ = 'users' # table name
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    age = db.Column(db.Integer)
-    country = db.Column(db.String(50))
-
-    def json(self):
-        return {'name': self.name, 'age':self.age, 'country':self.country}
-    
-    @classmethod
-    @cache.cached(timeout=30)
-    def find_user_by_name(cls,name): 
-       return cls.query.filter_by(name=name).first_or_404()
-
 
 @app.before_first_request
 def create_tables():
@@ -84,6 +45,7 @@ def create_tables():
 @app.route('/', methods=['GET'])
 def home():
     return f"The endpoints available are /users and /user/<name>. For example, /users will return all the users and /user/<name> will return the user with the given name."
+
 
 # endpoint to retrieve all users
 api.add_resource(Users, '/users')

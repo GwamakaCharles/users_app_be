@@ -18,3 +18,13 @@ DATABASE_URI = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.forma
     dbhost=os.environ['DBHOST'] + ".postgres.database.azure.com",
     dbname=os.environ['DBNAME']
 )
+
+
+CACHE_REDIS_URL = 'redis://{redishost}:{redisport}/{redisdb}'.format(
+    redishost=os.environ['CACHE_REDIS_HOST'],
+    redisport=os.environ['CACHE_REDIS_PORT'],
+    redisdb=os.environ['CACHE_REDIS_DB']
+)
+
+CACHE_TYPE="RedisCache"
+CACHE_DEFAULT_TIMEOUT=300
