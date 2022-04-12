@@ -5,16 +5,20 @@ from flask_restful import Resource, Api
 import redis
 from flask_caching import Cache
 
+# Creates an instance of the Flask class called 'app'
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://root:postgres@database:5432/users_app_db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Configure the sqlalchemy database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://root:postgres@database:5432/users_app_db' #The database URI that should be used for the connection.
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #This is a flag that controls whether or not modifications to SQLAlchemy-mapped objects are automatically tracked.
 
+# Create an instance of the Api class for the app to create the routes
 api = Api(app)
+
+# Create a new SQLAlchemy database object called 'db' to connect to the database
 db = SQLAlchemy(app)
 
-# Configure Redis cache
-# r = redis.Redis(host='cache', port=6379, db=0)
+# Configure Redis cache to store the cache data
 config = {
     "CACHE_TYPE": "RedisCache",  # Set up Redis as the cache
     "CACHE_REDIS_HOST": "redis",  # Set the Redis host
