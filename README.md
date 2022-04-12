@@ -1,15 +1,29 @@
-# PowerToFly
+## Problem Statement
 
-PowerToFly code challenge
+Develop an API endpoint to get a list of users.
+
+### Requirements to DB
+
+DB should have at least 1MM records.
+
+### Requirements to API
+
+- Pagination support
+- Filtration support
+- Cache-Control (client and server-side)
+
+### Tech stack (must have)
+
+- Docker
+- Flask-like framework
+- SQLite- or PostgreSQL-like database
+- GIT
+
+### Nice to have:
+
+- Caching: Redis or Memcached
 
 This project uses Github Actions and Git for CI/CD to build and push the image to Docker Hub.If you want to contribute, create a pull request or raise an issue.
-
-**Tech Stack**
-
-- Flask
-- Postgresql
-- Redis
-- Docker
 
 # SETUP
 
