@@ -23,7 +23,7 @@ CACHE_REDIS_URL = 'redis://{redishost}:{redisport}/{redisdb}'.format(
     redisdb=os.environ['CACHE_REDIS_DB']
 )
 
-CACHE_TYPE=RedisCache
+CACHE_TYPE="RedisCache"
 CACHE_DEFAULT_TIMEOUT=300
 
 

@@ -33,6 +33,15 @@ api = Api(app)
 db = SQLAlchemy(app)
 
 # Configure Redis cache to store the cache data
+# config = {
+#     "CACHE_TYPE": "RedisCache",  # Set up Redis as the cache
+#     "CACHE_REDIS_HOST": "redis",  # Set the Redis host
+#     "CACHE_REDIS_PORT": 6379, # Set the Redis port
+#     "CACHE_REDIS_DB": 0, # Set the Redis DB
+#     "CACHE_REDIS_URL": "redis://redis:6379/0", # Set the Redis URL
+#     "CACHE_DEFAULT_TIMEOUT": 300 # Set the default cache timeout
+# }
+# tell Flask to use the above defined config
 app.config.from_object('env_variables.development')
 cache = Cache(app)
 
