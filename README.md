@@ -2,6 +2,8 @@
 
 PowerToFly code challenge
 
+This project uses Github Actions and Git for CI/CD to build and push the image to Docker Hub.If you want to contribute, create a pull request or raise an issue.
+
 **Tech Stack**
 
 - Flask
@@ -13,7 +15,7 @@ PowerToFly code challenge
 
 ## Docker
 
-Clone this repo to your local machine
+Clone this repo to your local machine.
 
 ```
 git clone https://github.com/GwamakaCharles/users_app_be/
