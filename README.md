@@ -137,6 +137,7 @@ Read the _api.yaml_ file first to understand how the API endpoints are used.
 `[GET] /users`
 
 - Returns a list of all users.
+  ![terminal Deploy Results](./screenshots/users_list_page.png)
 
 for filtering the users, you can use the following query parameters:
 `[GET] /user/<name>`
