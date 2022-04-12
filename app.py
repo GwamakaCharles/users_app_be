@@ -17,6 +17,7 @@ if not 'WEBSITE_HOSTNAME' in os.environ:
    # local development, where we'll use environment variables
    print("Loading config.development and environment variables from .env file.")
    app.config.from_object('env_variables.development')
+#    app.config.from_object('env_variables.development')
 else:
    # production
    print("Loading config.production.")
@@ -33,8 +34,8 @@ api = Api(app)
 # Initialize the database connection
 db = SQLAlchemy(app)
 
-# tell Flask to use the above defined config
-app.config.from_object('env_variables.development')
+
+# app.config.from_object('env_variables.development')
 cache = Cache(app)
 
 @app.before_first_request
