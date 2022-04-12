@@ -19,9 +19,8 @@ Clone this repo to your local machine.
 
 ```
 git clone https://github.com/GwamakaCharles/users_app_be/
-```
-
 cd users_app_be
+```
 
 Rename the .env.example to .env
 
