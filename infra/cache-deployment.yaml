@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cache
+  name: cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cache
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f compose.yml
+        kompose.version: 1.22.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        app: cache
+    spec:
+      containers:
+        - env:
+            - name: CACHE_DEFAULT_TIMEOUT
+              value: "500"
+            - name: CACHE_REDIS_DB
+              value: "0"
+            - name: CACHE_REDIS_HOST
+              value: redis
+            - name: CACHE_REDIS_PORT
+              value: "6379"
+            - name: CACHE_REDIS_URL
+              value: redis://redis:6379/0
+            - name: CACHE_TYPE
+              value: redis
+          image: redis
+          name: redis
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: redis-data
+      restartPolicy: Always
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-data
+status: {}

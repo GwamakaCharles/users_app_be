@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_URL
+              value: postgresql+psycopg2://root:postgres@database:5432/users_app_db
+          image: gwamaka/users_app_be
+          name: users-app-be
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

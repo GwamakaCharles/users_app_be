@@ -6,3 +6,5 @@ Flask-Seeder
 gunicorn
 flask_caching
 Flask-RESTful
+flask_wtf
+python-dotenv
