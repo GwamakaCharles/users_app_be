@@ -48,9 +48,10 @@ from generate_series(1,1000000) s(i);
 ```
 
 **API Endpoints**
-Read the api.yaml first to understand how the API endpoints are used.
 
-## There are two available endpoints:
+Read the _api.yaml_ file first to understand how the API endpoints are used.
+
+## There are two endpoints available:
 
 `[GET] /users`
 
