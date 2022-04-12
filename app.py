@@ -15,11 +15,11 @@ csrf = CSRFProtect(app)
 if not 'WEBSITE_HOSTNAME' in os.environ:
    # local development, where we'll use environment variables
    print("Loading config.development and environment variables from .env file.")
-   app.config.from_object('variables.development')
+   app.config.from_object('env_variables.development')
 else:
    # production
    print("Loading config.production.")
-   app.config.from_object('variables.production')
+   app.config.from_object('env_variables.production')
 
 app.config.update(
     SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
@@ -34,7 +34,7 @@ app.config.update(
 # Create an instance of the Api class for the app to create the routes
 api = Api(app)
 
-# Create a new SQLAlchemy database object called 'db' to connect to the database
+# Initialize the database connection
 db = SQLAlchemy(app)
 
 # Configure Redis cache to store the cache data
