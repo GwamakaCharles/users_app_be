@@ -24,9 +24,11 @@ cd users_app_be
 
 Rename the .env.example to .env
 
-```
+```bash
 mv .env.example .env
 ```
+
+Run the project locally
 
 ```
 docker-compose up -d --build
