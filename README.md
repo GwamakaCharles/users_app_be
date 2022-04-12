@@ -1,8 +1,8 @@
-# powerToFly
+# PowerToFly
 
 PowerToFly code challenge
 
-**Stack**
+**Tech Stack**
 
 - Flask
 - Postgresql
@@ -21,11 +21,19 @@ git clone https://github.com/GwamakaCharles/users_app_be/
 
 cd users_app_be
 
+Rename the .env.example to .env
+
 ```
-docker-compose up
+mv .env.example .env
+```
+
+```
+docker-compose up -d --build
 ```
 
 The app will be running on port 5000 so you can access it at http://localhost:5000
+
+## Note: Visit the root endpoint first so that flask can create the users_app_db database and users table.
 
 Connect to the database using the following command
 
@@ -33,7 +41,7 @@ Connect to the database using the following command
 docker exec -it users_app_db psql -U postgres
 ```
 
-Or use the [Postico](https://eggerapps.at/postico/) utility to connect to the database using the database credentials available in the docker-compose.yml file
+Or use the [Postico](https://eggerapps.at/postico/) utility to connect to the database using the database credentials available in the docker-compose.yml file. Remember to refresh the app after each command.
 
 Fill the users table with dummy data using the following command
 
@@ -47,11 +55,84 @@ select
 from generate_series(1,1000000) s(i);
 ```
 
+## Deploy to Azure AKS
+
+If you don't have a free azure account you can create one [here](https://azure.microsoft.com/en-us/free/)
+
+Login to Azure CLI
+
+```
+az login
+```
+
+Enable Operational Management and Insights for your cluster
+
+```bash
+az provider register --namespace Microsoft.OperationsManagement
+az provider register --namespace Microsoft.OperationalInsights
+
+```
+
+Verify Microsoft.OperationsManagement and Microsoft.OperationalInsights are registered on your subscription. To check the registration status:
+
+```bash
+az provider show -n Microsoft.OperationsManagement -o table
+az provider show -n Microsoft.OperationalInsights -o table
+```
+
+Create a resource group using the az group create command.
+
+```bash
+az group create --name myResourceGroup --location eastus
+```
+
+Create an AKS cluster using the az aks create command with the --enable-addons monitoring parameter to enable Azure Monitor container insights.
+
+```bash
+az aks create --resource-group myResourceGroup --name myAKSCluster --node-count 1 --enable-addons monitoring --generate-ssh-keys
+```
+
+To manage a Kubernetes cluster, use the Kubernetes command-line client, [kubectl](https://kubernetes.io/docs/reference/kubectl/kubectl/).
+
+```bash
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+```
+
+Verify the connection to your cluster using the _kubectl get_ command. This command returns a list of the cluster nodes.
+
+```bash
+kubectl get nodes
+```
+
+Deploy the application using the _kubectl apply_ command:
+
+```bash
+kubectl apply -f k8s_infrastructure/
+```
+
+The following screen shows the deployment of the application.
+![terminal Deploy Results](./screenshots/apply_results.png)
+
+Visit the The EXTERNAL-IP output for the web service after the deployment completes.
+![terminal Running Serives](./screenshots/running_services.png)
+
+Don't Forget to populate the database with Dummy Data
+
+## Note: To avoid Azure charges, clean up your unnecessary resources
+
+```bash
+az group delete --name myResourceGroup --yes --no-wait
+```
+
 **API Endpoints**
 
 Read the _api.yaml_ file first to understand how the API endpoints are used.
 
-## There are two endpoints available:
+## There are three endpoints available:
+
+`[GET] /`
+
+- Returns a home with some instructions
 
 `[GET] /users`
 
