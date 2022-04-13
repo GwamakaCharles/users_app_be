@@ -162,14 +162,18 @@ Read the _api.yaml_ file first to understand how the API endpoints are used.
 - Returns a list of all users.
   ![terminal Deploy Results](./screenshots/users_list_page.png)
 
-for filtering the users, you can use the following query parameters:
+## Filtering
+
+You can use the following query parameters:
 
 `[GET] /user/<name>`
 
 - Brings user with the given name.
   for example: `/user/john` will bring the user with name `john`.
 
-for pagination, you can use the following parameters:
+## Pagination
+
+You can use the following parameters:
 
 - page: the page number, default value is 1
 - per_page: the number of results per page, default value is 20
