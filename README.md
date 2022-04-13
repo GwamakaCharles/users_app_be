@@ -170,6 +170,7 @@ You can use the following query parameters:
 
 - Brings user with the given name.
   for example: `/user/john` will bring the user with name `john`.
+  ![user](./screenshots/user.png)
 
 ## Pagination
 
@@ -179,6 +180,8 @@ You can use the following parameters:
 - per_page: the number of results per page, default value is 20
   for example:
 
-  `[GET] /users?page=2&per_page=10`
+  `[GET] /users?page=3` will bring the 3rd page of results.
+  ![user](./screenshots/page_3.png)
 
-- Brings the second page of 10 users.
+  `[GET] /users?page=2&per_page=10` Brings the second page of 10 users.
+  ![page2&10results](./screenshots/page2%2610.png)
