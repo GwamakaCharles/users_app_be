@@ -25,9 +25,11 @@ DB should have at least 1MM records.
 
 This project uses Github Actions and Git for CI/CD to build and push the image to Docker Hub.If you want to contribute, create a pull request or raise an issue.
 
-# SETUP
+## Installation
 
-## Docker
+> **Requirements**: Docker Desktop. You can download it [here](https://www.docker.com/products/docker-desktop/), run `docker` to ensure your docker client is running. Also [Postico](https://eggerapps.at/postico/) is required to create a database and populate the users table with dummy data.
+
+### Docker
 
 Clone this repo to your local machine.
 
@@ -50,7 +52,9 @@ docker-compose up -d --build
 
 The app will be running on port 5000 so you can access it at http://localhost:5000
 
-## Note: Visit the root endpoint first so that flask can create the users_app_db database and users table.
+| :warning: WARNING                                                                                 |
+| :------------------------------------------------------------------------------------------------ |
+| Visit the root endpoint first so that flask can create the users_app_db database and users table. |
 
 Connect to the database using the following command
 
@@ -72,9 +76,9 @@ select
 from generate_series(1,1000000) s(i);
 ```
 
-## Deploy to Azure AKS
+### Deploy to Azure AKS
 
-If you don't have a free azure account you can create one [here](https://azure.microsoft.com/en-us/free/)
+> **Requirements**: Docker Desktop. You can download it [here](https://www.docker.com/products/docker-desktop/), run `docker` to ensure your docker client is running. Kubernetes enabled, Learn how to [here](https://docs.docker.com/desktop/kubernetes/). Azure Account, create a free one [here](https://azure.microsoft.com/en-us/free/)
 
 Login to Azure CLI
 
@@ -135,7 +139,9 @@ Visit the The EXTERNAL-IP output for the web service after the deployment comple
 
 Don't Forget to populate the database with Dummy Data
 
-## Note: To avoid Azure charges, clean up your unnecessary resources
+| :warning: WARNING                                            |
+| :----------------------------------------------------------- |
+| To avoid Azure charges, clean up your unnecessary resources. |
 
 ```bash
 az group delete --name myResourceGroup --yes --no-wait
