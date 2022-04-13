@@ -76,6 +76,9 @@ select
 from generate_series(1,1000000) s(i);
 ```
 
+> Postico
+> ![postico](./screenshots/postico.png)
+
 ### Deploy to Azure AKS
 
 > **Requirements**: Docker Desktop. You can download it [here](https://www.docker.com/products/docker-desktop/), run `docker` to ensure your docker client is running. Kubernetes enabled, Learn how to [here](https://docs.docker.com/desktop/kubernetes/). Azure Account, create a free one [here](https://azure.microsoft.com/en-us/free/)
