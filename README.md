@@ -1,3 +1,5 @@
+[![Build and Push a Docker Image CI](https://github.com/GwamakaCharles/users_app_be/actions/workflows/docker-image.yml/badge.svg?branch=main)](https://github.com/GwamakaCharles/users_app_be/actions/workflows/docker-image.yml)
+
 ## Problem Statement
 
 Develop an API endpoint to get a list of users.
