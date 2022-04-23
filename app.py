@@ -1,11 +1,16 @@
-from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_seeder import FlaskSeeder
-from flask_restful import Resource, Api
-from flask_wtf.csrf import CSRFProtect
-import redis
+"""
+This module contains the main application.
+"""
+
+
 import os
+
+import redis
+from flask import Flask, jsonify, request
 from flask_caching import Cache
+from flask_restful import Api, Resource
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
 # Creates an instance of the Flask class called 'app'
 app = Flask(__name__)
@@ -36,13 +41,25 @@ db = SQLAlchemy(app)
 cache = Cache(app)
 
 class Users(Resource):
+    """
+    This class is used to create a resource for the users table.
+    """
     @cache.cached(timeout=30)
     def get(self):
+        """
+        This method is used to get all the users from the database.
+        """
         return {'users' : [user.json() for user in UserModel.query.paginate().items]}
 
 class User(Resource):
+    """
+    This class is used to create a new user.
+    """
     @cache.cached(timeout=30)
     def get(self,name):
+        """
+        This method is used to get a user by name.
+        """
         user = UserModel.find_user_by_name(name)
         return user.json()
 
@@ -58,22 +75,34 @@ class UserModel(db.Model):
     country = db.Column(db.String(50))
 
     def json(self):
+        """
+        Return a dictionary representation of the user
+        """
         return {'name': self.name, 'age':self.age, 'country':self.country}
-    
+
     @classmethod
     @cache.cached(timeout=30)
-    def find_user_by_name(cls,name): 
-       return cls.query.filter_by(name=name).first_or_404()
+    def find_user_by_name(cls,name):
+        """
+        This method is used to find a user by name.
+        """
+        return cls.query.filter_by(name=name).first_or_404()
 
 
 @app.before_first_request
 def create_tables():
+    """
+    This method is used to create the tables in the database.
+    """
     db.create_all()
 
 
 @app.route('/', methods=['GET'])
 def home():
-    return f"The endpoints available are /users and /user/<name>. For example, /users will return all the users and /user/<name> will return the user with the given name."
+    """
+    This method is used to display the home page.
+    """
+    return "The endpoints available are /users and /user/<name>. For example, /users will return all the users and /user/<name> will return the user with the given name."
 
 # endpoint to retrieve all users
 api.add_resource(Users, '/users')
