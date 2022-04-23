@@ -1,5 +1,10 @@
-from dotenv import load_dotenv
+"""
+This module contains the production environment variables.
+"""
+
 import os
+
+from dotenv import load_dotenv
 
 load_dotenv() # take environment variables from .env.
 
